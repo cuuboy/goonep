@@ -140,15 +140,13 @@ type ProvRestModel interface {
 func ProvCall(vendorToken, method, path string) (interface{}, error) {
     client := &http.Client{}
 
-    var serverUrl = ""
-
     // https://m2.exosite.com/provision/manage/model/flow_sensor/POC_FLOW_01
+    var serverUrl = ""
+    serverUrl = "https://" + ONEPHost + "/provision/"
     if InDev {
-            serverUrl = "https://m2-dev.exosite.com/provision/"
-        } else {
-            serverUrl = "https://m2.exosite.com/provision/"
-        }
-    
+        serverUrl = "https://m2-dev.exosite.com/provision/"
+    }
+
     req, _ := http.NewRequest(method, serverUrl + path, nil)            
     req.Header.Add("X-Exosite-Token", vendorToken)
 
