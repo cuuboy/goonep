@@ -5,7 +5,6 @@ package goonep
 import (
     "bytes"
     "encoding/json"
-    //    "fmt"
     "io/ioutil"
     "net/http"
     //"log"
@@ -15,6 +14,8 @@ var version = "0.1"
 var DomainKey = ""
 
 var InDev = false
+// Set this to, e.g., "m2.exosite.com" or "localhost:18393"
+var ONEPHost = "m2.exosite.com"
 
 type Response struct {
     Results []Result
@@ -62,12 +63,10 @@ func CallMulti(auth interface{}, calls []interface{}) (Response, error) {
     }
 
     var serverUrl = ""
-
+    serverUrl = "https://" + ONEPHost + "/api:v1/rpc/process"
     if InDev {
-            serverUrl = "https://m2-dev.exosite.com/api:v1/rpc/process"
-        } else {
-            serverUrl = "https://m2.exosite.com/api:v1/rpc/process"
-        }
+        serverUrl = "https://m2-dev.exosite.com/api:v1/rpc/process"
+    }
 
     buf, _ := json.Marshal(requestBody)
     requestBodyBuf := bytes.NewBuffer(buf)
